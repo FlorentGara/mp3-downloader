@@ -34,14 +34,19 @@ def home():
 @app.route('/download', methods=['POST'])
 def download():
     url = request.form['url']
-    # Use /tmp directory because most cloud hosts only allow writing there
     download_folder = "/tmp"
+    
+    # We look for cookies.txt in the current folder
+    cookie_path = "cookies.txt"
     
     ydl_opts = {
         'format': 'bestaudio/best',
         'outtmpl': f'{download_folder}/%(title)s.%(ext)s',
         'postprocessors': [{'key': 'FFmpegExtractAudio','preferredcodec': 'mp3','preferredquality': '192'}],
-        # Note: We don't need to specify ffmpeg location if installed via Docker
+        
+        # --- NEW SETTINGS TO FIX THE ERROR ---
+        'cookiefile': cookie_path if os.path.exists(cookie_path) else None,
+        'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
     }
 
     try:
