@@ -35,16 +35,16 @@ def home():
 def download():
     url = request.form['url']
     download_folder = "/tmp"
-    
-    # We look for cookies.txt in the current folder
     cookie_path = "cookies.txt"
     
-ydl_opts = {
+    ydl_opts = {
         'format': 'bestaudio/best',
         'outtmpl': f'{download_folder}/%(title)s.%(ext)s',
-        'postprocessors': [{'key': 'FFmpegExtractAudio','preferredcodec': 'mp3','preferredquality': '192'}],
-        
-        # --- FIX FOR "SABR" & "FRAGMENT NOT FOUND" ---
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+            'preferredquality': '192'
+        }],
         'cookiefile': cookie_path if os.path.exists(cookie_path) else None,
         'extractor_args': {
             'youtube': {
