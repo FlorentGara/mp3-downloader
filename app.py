@@ -46,12 +46,13 @@ def download():
             'preferredquality': '192'
         }],
         'cookiefile': cookie_path if os.path.exists(cookie_path) else None,
+        # --- THE IOS TRICK ---
         'extractor_args': {
             'youtube': {
-                'player_client': ['android', 'web']
+                'player_client': ['ios'],
             }
         },
-        'user_agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36',
+        'user_agent': 'com.google.ios.youtube/19.29.1 (iPhone16,2; U; CPU iOS 17_5_1 like Mac OS X; en_US)',
     }
 
     try:
