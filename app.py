@@ -39,14 +39,19 @@ def download():
     # We look for cookies.txt in the current folder
     cookie_path = "cookies.txt"
     
-    ydl_opts = {
+ydl_opts = {
         'format': 'bestaudio/best',
         'outtmpl': f'{download_folder}/%(title)s.%(ext)s',
         'postprocessors': [{'key': 'FFmpegExtractAudio','preferredcodec': 'mp3','preferredquality': '192'}],
         
-        # --- NEW SETTINGS TO FIX THE ERROR ---
+        # --- FIX FOR "SABR" & "FRAGMENT NOT FOUND" ---
         'cookiefile': cookie_path if os.path.exists(cookie_path) else None,
-        'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'extractor_args': {
+            'youtube': {
+                'player_client': ['android', 'web']
+            }
+        },
+        'user_agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Mobile Safari/537.36',
     }
 
     try:
